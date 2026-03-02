@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sunanda Birthday</title>
+
+
+<link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
+
+
+<style>
+body{
+margin:0;
+font-family:'Comic Neue',cursive;
+background:linear-gradient(135deg,#ff9a9e,#fecfef);
+overflow:hidden;
+color:white;
+}
+
+
+/* LOCK SCREEN */
+#lockScreen{
+position:fixed;
+width:100%;
+height:100%;
+background:#ff69b4;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+z-index:20;
+}
+
+
+#lockScreen h1{
+font-family:'Pacifico',cursive;
+font-size:38px;
+}
+
+
+input{
+padding:12px;
+border-radius:25px;
+border:none;
+font-size:18px;
+text-align:center;
+margin-top:15px;
+}
+
+
+button{
+margin-top:15px;
+padding:10px 25px;
+border-radius:25px;
+border:none;
+background:white;
+color:#ff1493;
+font-weight:bold;
+font-size:16px;
+box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+
+/* TIMER */
+#timer{
+display:none;
+position:fixed;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.5);
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:80px;
+font-weight:bold;
+z-index:15;
+}
+
+
+/* PAGES */
+.page{
+display:none;
+position:absolute;
+width:100%;
+height:100%;
+padding:40px 20px;
+box-sizing:border-box;
+text-align:center;
+}
+
+
+.active{
+display:block;
+animation:fade 0.6s ease-in-out;
+}
+
+
+@keyframes fade{
+from{opacity:0;transform:translateX(30px);}
+to{opacity:1;transform:translateX(0);}
+}
+
+
+.page h1{
+font-family:'Pacifico',cursive;
+font-size:34px;
+}
+
+
+.page p{
+font-size:18px;
+margin-top:20px;
+line-height:1.6;
+}
+
+
+.nextBtn{
+position:absolute;
+bottom:40px;
+left:50%;
+transform:translateX(-50%);
+}
+
+
+/* Floating hearts */
+.heart{
+position:absolute;
+font-size:20px;
+animation:float 6s linear forwards;
+}
+
+
+@keyframes float{
+0%{transform:translateY(0);opacity:1;}
+100%{transform:translateY(-900px);opacity:0;}
+}
+
+
+/* Sparkle */
+.sparkle{
+position:absolute;
+font-size:14px;
+animation:twinkle 2s infinite alternate;
+}
+
+
+@keyframes twinkle{
+from{opacity:0.3;}
+to{opacity:1;}
+}
+
+
+/* Teddy bounce */
+#teddy{
+font-size:50px;
+animation:bounce 1s infinite alternate;
+margin-top:20px;
+}
+
+
+@keyframes bounce{
+from{transform:translateY(0);}
+to{transform:translateY(-15px);}
+}
+
+
+/* Final popup */
+#finalPopup{
+display:none;
+position:fixed;
+width:80%;
+max-width:300px;
+background:white;
+color:#ff1493;
+padding:25px;
+border-radius:20px;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+text-align:center;
+box-shadow:0 10px 30px rgba(0,0,0,0.3);
+z-index:30;
+}
+</style>
+</head>
+
+
+<body>
+
+
+<div id="lockScreen">
+<h1>Only For Sunanda 💖</h1>
+<input type="password" id="password" placeholder="Enter Password">
+<button onclick="unlock()">Unlock</button>
+</div>
+
+
+<div id="timer"></div>
+
+
+<!-- Pages -->
+
+
+<div class="page" id="page0">
+<h1>🌷 Sunanda 🌷</h1>
+<div id="teddy">🧸</div>
+<p>Happy Birthday to the cutest human ever 💕</p>
+<button class="nextBtn" onclick="nextPage()">Next</button>
+</div>
+
+
+<div class="page" id="page1">
+<h1>My Cute Angry Girl 😠💖</h1>
+<p>You get angry quickly…  
+but in anger you look even more beautiful 😍  
+And honestly... I love teasing you.</p>
+<button class="nextBtn" onclick="nextPage()">Next</button>
+</div>
+
+
+<div class="page" id="page2">
+<h1>My Peace 🌙</h1>
+<p>I’m always happiest when I fall asleep watching you,  
+smiling at your face,  
+and thinking how lucky I am.</p>
+<button class="nextBtn" onclick="nextPage()">Next</button>
+</div>
+
+
+<div class="page" id="page3">
+<h1>Forever & Always ❤️</h1>
+<p>No matter what happens,  
+I will always choose you.  
+Every single time.</p>
+<button class="nextBtn" onclick="nextPage()">Next</button>
+</div>
+
+
+<div class="page" id="page4">
+<h1>Final Surprise 🎁</h1>
+<p>Tap below for your surprise 💖</p>
+<button class="nextBtn" onclick="showFinal()">Open</button>
+</div>
+
+
+<div id="finalPopup">
+<h2>I Love You So Much 💕</h2>
+<p>You are my today, tomorrow and forever.  
+Stay mine always 😌</p>
+<button onclick="closePopup()">Close</button>
+</div>
+
+
+<script>
+
+
+var current=0;
+var total=5;
+
+
+function unlock(){
+var pass=document.getElementById("password").value;
+if(pass==="Tushar77"){
+document.getElementById("lockScreen").style.display="none";
+startTimer();
+}else{
+alert("Wrong Password");
+}
+}
+
+
+function startTimer(){
+var time=5;
+var timer=document.getElementById("timer");
+timer.style.display="flex";
+timer.innerText=time;
+
+
+var count=setInterval(function(){
+time--;
+timer.innerText=time;
+
+
+if(time<=0){
+clearInterval(count);
+timer.style.display="none";
+document.getElementById("page0").classList.add("active");
+}
+},1000);
+}
+
+
+function nextPage(){
+if(current<total-1){
+document.getElementById("page"+current).classList.remove("active");
+current++;
+document.getElementById("page"+current).classList.add("active");
+}
+}
+
+
+/* Swipe support */
+var startX=0;
+document.addEventListener("touchstart",e=>startX=e.touches[0].clientX);
+document.addEventListener("touchend",e=>{
+let endX=e.changedTouches[0].clientX;
+if(startX-endX>50) nextPage();
+});
+
+
+/* Floating hearts */
+setInterval(function(){
+var heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="💖";
+heart.style.left=Math.random()*100+"%";
+heart.style.bottom="0px";
+document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),6000);
+},900);
+
+
+/* Sparkles */
+setInterval(function(){
+var sparkle=document.createElement("div");
+sparkle.className="sparkle";
+sparkle.innerHTML="✨";
+sparkle.style.left=Math.random()*100+"%";
+sparkle.style.top=Math.random()*100+"%";
+document.body.appendChild(sparkle);
+setTimeout(()=>sparkle.remove(),2000);
+},500);
+
+
+function showFinal(){
+document.getElementById("finalPopup").style.display="block";
+}
+
+
+function closePopup(){
+document.getElementById("finalPopup").style.display="none";
+}
+
+
+</script>
+
+
+</body>
+</html>
